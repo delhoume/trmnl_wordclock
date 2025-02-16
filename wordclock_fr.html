@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<style>
+    @font-face {
+        font-family: "TerminalF4";
+        font-style: normal;
+        font-weight: bold;
+        font-family: TerminalF4;
+        -webkit-font-smoothing: none;
+        src: url("TerminalF4.ttf") format("truetype")
+    }
+
+    .wordclock_text_normal {
+        background: repeat url("gray-6.png");
+        font-size: 40px;
+        letter-spacing: 30px;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+        color: rgba(0, 0, 0, 0);
+        -webkit-font-smoothing: none;
+        -webkit-background-clip: text;
+        background-clip: text;
+
+        font-family: "TerminalF4";
+    }
+
+    .wordclock_text_highlighted {
+        font-size: 40px;
+        letter-spacing: 30px;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+        color: #000;
+        -webkit-font-smoothing: none;
+        font-family: "TerminalF4";
+    }
+</style>
+
+<head>
+    <link rel="stylesheet" href="https://usetrmnl.com/css/latest/plugins.css">
+</head>
+
+<body class="environment trmnl">
+    <div class="screen">
+        <div class="view view--full">
+            <div class="layout layout--col layout--center-y">
+                <div>
+                    <div class="row">
+                        <p id="u_un_une" class="wordclock_text_normal">U</p>
+                        <p id="n_un_une_neuf" class="wordclock_text_normal">N</p>
+                        <p id="e_une_neuf" class="wordclock_text_normal">E</p>
+                        <p id="uf_neuf" class="wordclock_text_normal">UF</p>
+                        <p id="deux" class="wordclock_text_normal">DEUX</p>
+                        <p id="sept" class="wordclock_text_normal">SEPT</p>
+                    </div>
+                    <div class="row">
+                        <p id="cin_cinq" class="wordclock_text_normal">CIN</p>
+                        <p id="q_cinq_quatre" class="wordclock_text_normal">Q</p>
+                        <p id="uatre_quatre" class="wordclock_text_normal">UATRE</p>
+                        <p id="huit" class="wordclock_text_normal">HUIT</p>
+                    </div>
+                    <div class="row">
+                        <p id="troi_trois" class="wordclock_text_normal">TROI</p>
+                        <p id="s_trois_six" class="wordclock_text_normal">S</p>
+                        <p id="ix_six" class="wordclock_text_normal">IX</p>
+                        <p id="minuit" class="wordclock_text_normal">MINUIT</p>
+                    </div>
+                    <div class="row">
+                        <p id="onze" class="wordclock_text_normal">ONZE</p>
+                        <p id="mi_midi" class="wordclock_text_normal">MI</p>
+                        <p id="di_midi" class="wordclock_text_normal">DI
+                        <p id="x_dix" class="wordclock_text_normal">X</p>
+                        <p id="" class="wordclock_text_normal">STAR</p>
+
+                    </div>
+                    <div class="row">
+                        <p id="heure" class="wordclock_text_normal">HEURE</p>
+                        <p id="s_heures" class="wordclock_text_normal">S</p>
+                        <p class="wordclock_text_normal">K</p>
+                        <p id="moins" class="wordclock_text_normal">MOINS</p>
+                        <p class="wordclock_text_normal">Y</p>
+                    </div>
+                    <div class="row">
+                        <p id="l_le" class="wordclock_text_normal">L</p>
+                        <p id="e_le_et" class="wordclock_text_normal">E</p>
+                        <p id="t_et" class="wordclock_text_normal">T</p>
+                        <p id="vingt_vingt_vingtcinq" class="wordclock_text_normal">VINGT</p>
+                        <p id="ddash" class="wordclock_text_normal">-</p>
+                        <p id="minute_cinq_vingtcinq" class="wordclock_text_normal">CINQ</p>
+                    </div>
+                    <div class="row">
+                        <p id="minute_dix" class="wordclock_text_normal">DIX</p>
+                        <p id="quart" class="wordclock_text_normal">QUART</p>
+                        <p id="demie" class="wordclock_text_normal">DEMIE</p>
+                    </div>
+                </div>
+            </div>
+            <div class="title_bar">
+                <img class="image" src="https://usetrmnl.com/images/plugins/trmnl--render.svg" />
+                <span class="title">Word Clock</span>
+                <span class="instance">Arcueil</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+
+    /*
+      1 bit worldclock by delhoume@gmail.com
+      this code is free
+      */
+
+    const highlight = (name) => {
+        var element = document.getElementById(name);
+        if (element) element.className = "wordclock_text_highlighted";
+        else console.log("no such element", name);
+    }
+
+
+    var count = 0;
+    const showTime = () => {
+        var highlighted = document.getElementsByClassName("wordclock_text_highlighted");
+        var ids = [];
+        if (highlighted.length > 0) {
+            for (var h = 0; h < highlighted.length; ++h) {
+                ids.push(highlighted[h].id)
+            }
+        }
+        ids.forEach((id) => document.getElementById(id).className = "wordclock_text_normal");
+        var now = new Date(); // normal mode
+        // uncomment next 3 lines for time warp !
+        const refdate = new Date(2025, 1, 18).getTime();
+        now = new Date(refdate + count);
+        count += 30000;
+
+        var hour = now.getHours();
+        var minutes = now.getMinutes();
+        var displayed_hour = hour;
+
+        var num_five = Math.floor(minutes / 5);
+        // console.log(minutes, "-=>", num_five);
+
+        if (minutes > 30) {
+            displayed_hour = hour + 1;
+        }
+
+        switch (displayed_hour) {
+            case 0: { highlight("minuit"); } break
+            case 1: case 13: {
+                highlight("heure"); highlight("u_un_une");
+                highlight("n_un_une_neuf"); highlight("e_une_neuf");
+                highlight("heure");
+                break;
+            }
+            case 2: case 14: { highlight("deux"); highlight("heure"); highlight("s_heures"); break; }
+            case 3: case 15: { highlight("troi_trois"); highlight("s_trois_six"); highlight("heure"); highlight("s_heures"); break; }
+            case 4: case 16: { highlight("q_cinq_quatre"); highlight("uatre_quatre"); highlight("heure"); highlight("s_heures"); break };
+            case 5: case 17: { highlight("cin_cinq"); highlight("q_cinq_quatre"); highlight("heure"); highlight("s_heures"); break; };
+            case 6: case 18: { highlight("s_trois_six"); highlight("ix_six"); highlight("heure"); highlight("s_heures"); break; };
+            case 7: case 19: { highlight("sept"); highlight("heure"); highlight("s_heures"); break; }
+            case 8: case 20: { highlight("huit"); highlight("heure"); highlight("s_heures");break; }
+            case 9: case 21: { highlight("n_un_une_neuf"); highlight("e_une_neuf"); highlight("uf_neuf"); highlight("heure"); highlight("s_heures"); break; };
+            case 10: case 22: { highlight("di_midi"); highlight("x_dix"); highlight("heure"); highlight("s_heures"); 
+                highlight("heure"); highlight("s_heures"); } break;
+            case 11: case 23: { highlight("onze"); highlight("heure"); highlight("s_heures"); break };
+            case 12: { highlight("mi_midi"); highlight("di_midi"); break }
+        }
+        switch (num_five) {
+            case 1:
+                highlight("minute_cinq_vingtcinq"); break;
+            case 2:
+                highlight("minute_dix"); break;
+            case 3:
+                highlight("e_le_et"); highlight("t_et"); highlight("quart"); break;
+            case 4: {
+                highlight("vingt_vingt_vingtcinq");
+            } break;
+            case 5: {
+                highlight("vingt_vingt_vingtcinq"); highlight("ddash"); highlight("minute_cinq_vingtcinq");
+            } break;
+            case 6: {
+                highlight("e_le_et"); highlight("t_et");
+                highlight("demie");
+            } break;
+            case 7: {
+                highlight("moins");
+                highlight("vingt_vingt_vingtcinq"); highlight("ddash"); highlight("minute_cinq_vingtcinq");
+            } break;
+            case 8: {
+                highlight("moins");
+                highlight("vingt_vingt_vingtcinq");
+            } break;
+            case 9: {
+                highlight("moins"); highlight("l_le"); highlight("e_le_et");
+                highlight("quart");
+            } break;
+
+            case 10: {
+                highlight("moins");
+                highlight("minute_dix");
+            } break;
+            case 11: {
+                highlight("moins");
+                highlight("minute_cinq_vingtcinq");
+            } break;
+        }
+        window.requestAnimationFrame(showTime);
+    }
+    showTime()
+
+</script>
+
+</html>
