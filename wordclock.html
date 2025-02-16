@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<style>
+    @font-face {
+        font-family: "TerminalF4";
+        font-style: normal;
+        font-weight: bold;
+        font-family: TerminalF4;
+        -webkit-font-smoothing: none;
+        src: url("TerminalF4.ttf") format("truetype")
+    }
+
+    .wordclock_text_normal {
+        background: repeat url("gray-6.png");
+        font-size: 40px;
+        letter-spacing: 30px;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+        color: rgba(0,0,0,0);
+        -webkit-font-smoothing: none;
+        -webkit-background-clip: text;
+        background-clip: text;
+
+        font-family: "TerminalF4";
+    }
+
+    .wordclock_text_highlighted {
+        font-size: 40px;
+        letter-spacing: 30px;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+        color: #000;
+        -webkit-font-smoothing: none;
+        font-family: "TerminalF4";
+    }
+</style>
+
+<head>
+    <link rel="stylesheet" href="https://usetrmnl.com/css/latest/plugins.css">
+</head>
+
+<body class="environment trmnl">
+    <div class="screen">
+        <div class="view view--full">
+            <div class="layout layout--col layout--center-y">
+                <div>
+                    <div class="row">
+                        <p id="twenty" class="wordclock_text_normal">TWENTY</p>
+                        <p id="ddash" class="wordclock_text_normal">&ndash;</p>
+                        <p id="minute_five" class="wordclock_text_normal">FIVE</p>
+                        <p class="wordclock_text_normal">CL</p>
+                    </div>
+                    <div class="row">
+                        <p id="topa" class="wordclock_text_normal">A</p>
+                        <p class="wordclock_text_normal">S</p>
+                        <p id="quarter" class="wordclock_text_normal">QUARTER</p>
+                        <p id="half" class="wordclock_text_normal">HALF</p>
+                    </div>
+                    <div class="row">
+                        <p id="minute_ten" class="wordclock_text_normal">TEN</p>
+                        <p class="wordclock_text_normal">T</p>
+                        <p id="pas_past" class="wordclock_text_normal">PAS</p>
+                        <p id="t_past_to" class="wordclock_text_normal">T</p>
+                        <p id="o_to" class="wordclock_text_normal">O</p>
+                        <p class="wordclock_text_normal">A</p>
+                        <p id="hour_ten" class="wordclock_text_normal">TEN</p>
+                    </div>
+                    <div class="row">
+                        <p id="tw_two" class="wordclock_text_normal">TW</p>
+                        <p id="o_two_one" class="wordclock_text_normal">O</p>
+                        <p id="n_one" class="wordclock_text_normal">N</p>
+                        <p id="e_one_eight" class="wordclock_text_normal">E</p>
+                        <p id="igh_eight" class="wordclock_text_normal">IGH</p>
+                        <p id="t_eight_three" class="wordclock_text_normal">T</p>
+                        <p id="hree_three" class="wordclock_text_normal">HREE</p>
+                    </div>
+                    <div class="row">
+                        <p id="midnight" class="wordclock_text_normal">MIDNIGHT</p>
+                        <p class="wordclock_text_normal">X</p>
+                        <p id="noon" class="wordclock_text_normal">NOON</p>
+                    </div>
+                    <div class="row">
+                        <p id="four" class="wordclock_text_normal">FOUR</p>
+                        <p id="fiv_five" class="wordclock_text_normal">FIV</p>
+                        <p id="e_five_eleven" class="wordclock_text_normal">E</p>
+                        <p id="leven_eleven" class="wordclock_text_normal">LEVEN</p>
+                    </div>
+                    <div class="row">
+                        <p id="twelve" class="wordclock_text_normal">TWELVE</p>
+                        <p id="six" class="wordclock_text_normal">SIX</p>
+                        <p id="nine" class="wordclock_text_normal">NINE</p>
+                    </div>
+                    <div class="row">
+                        <p id="seven" class="wordclock_text_normal">SEVEN</p>
+                        <p class="wordclock_text_normal">RK</p>
+                        <p id="oclock" class="wordclock_text_normal">ÓCLOCK</p>
+                    </div>
+                </div>
+            </div>
+            <div class="title_bar">
+                <img class="image" src="https://usetrmnl.com/images/plugins/trmnl--render.svg" />
+                <span class="title">Word Clock</span>
+                <span class="instance">Arcueil</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+
+  /*
+    1 bit worldclock by delhoume@gmail.com
+    this code is free
+    */
+     
+    const highlight = (name) => {
+        var element = document.getElementById(name);
+        if (element) element.className = "wordclock_text_highlighted";
+        else console.log("no such element", name);
+    }
+
+
+    var count = 0;
+    const showTime = () => {
+        var highlighted = document.getElementsByClassName("wordclock_text_highlighted");
+        var ids = [];
+        if (highlighted.length > 0) {
+            for (var h = 0; h < highlighted.length; ++h) {
+                ids.push(highlighted[h].id)
+            }
+        }
+        ids.forEach((id) => document.getElementById(id).className = "wordclock_text_normal");
+    var now = new Date(); // normal mode
+       // uncomment next 3 lines for time warp !
+    //    const refdate = new Date(2025, 1, 18).getTime();
+    //    now = new Date(refdate + count);
+    //    count +=  20000;
+        var hour = now.getHours();
+        var minutes = now.getMinutes();
+        var displayed_hour = hour;
+
+        var num_five = Math.floor(minutes / 5);
+        // console.log(minutes, "-=>", num_five);
+
+        if (minutes > 30) {
+            displayed_hour = hour + 1;
+        }
+
+        switch (displayed_hour) {
+            case 0: { highlight("midnight"); } break
+            case 1: case 13: { highlight("o_two_one"); highlight("n_one"); highlight("e_one_eight"); break; }
+            case 2: case 14: { highlight("tw_two"); highlight("o_two_one"); break; }
+            case 3: case 15: { highlight("t_eight_three"); highlight("hree_three"); break; }
+            case 4: case 16: { highlight("four"); break };
+            case 5: case 17: { highlight("fiv_five"); highlight("e_five_eleven"); break; };
+            case 6: case 18: { highlight("six"); break };
+            case 7: case 19: { highlight("seven"); break };
+            case 8: case 20: { highlight("e_one_eight"); highlight("igh_eight"); highlight("t_eight_three"); break };
+            case 9: case 21: { highlight("nine"); break };
+            case 10: case 22: { highlight("hour_ten"); break };
+            case 11: case 23: { highlight("e_five_eleven"); highlight("leven_eleven"); break };
+            case 12: { highlight("noon"); break }
+        }
+
+        switch (num_five) {
+            case 0:
+                if (hour != 0 && hour != 12) {
+                    highlight("oclock");
+                }
+                break;
+            case 1:
+                highlight("pas_past"); highlight("t_past_to");
+                highlight("minute_five"); break;
+            case 2:
+                highlight("pas_past"); highlight("t_past_to");
+                highlight("minute_ten"); break;
+            case 3:
+                highlight("pas_past"); highlight("t_past_to");
+                highlight("quarter"); break;
+            case 4: {
+                highlight("pas_past"); highlight("t_past_to");
+                highlight("twenty");
+            } break;
+            case 5: {
+                highlight("pas_past"); highlight("t_past_to");
+                highlight("twenty"); highlight("ddash"); highlight("minute_five");
+            } break;
+            case 6: {
+                highlight("pas_past"); highlight("t_past_to");
+                highlight("half");
+            } break;
+            case 7: {
+                highlight("t_past_to"); highlight("o_to");
+                highlight("twenty"); highlight("ddash"); highlight("minute_five");
+            } break;
+            case 8: {
+                highlight("t_past_to"); highlight("o_to");
+                highlight("twenty");
+            } break;
+            case 9: {
+                highlight("t_past_to"); highlight("o_to");
+                highlight("quarter");
+            } break;
+
+            case 10: {
+                highlight("t_past_to"); highlight("o_to");
+                highlight("minute_ten");
+            } break;
+            case 11: {
+                highlight("t_past_to"); highlight("o_to");
+                highlight("minute_five");
+            } break;
+        }
+        window.requestAnimationFrame(showTime);
+    }
+    showTime()
+
+</script>
+
+</html>
