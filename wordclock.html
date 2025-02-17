@@ -133,7 +133,10 @@
         }
         ids.forEach((id) => document.getElementById(id).className = "wordclock_text_normal");
     var now = new Date(); // normal mode
-       // uncomment next 3 lines for time warp !
+    var utc_offset = now.getTimezoneOffset() * 60 * 1000; // in minutes
+        var trmnl_user_offset = -28800 * 1000;  // user plugin parameter ? (in seconds)
+        now = new Date(now.getTime() + utc_offset + trmnl_user_offset);
+     // uncomment next 3 lines for time warp !
     //    const refdate = new Date(2025, 1, 18).getTime();
     //    now = new Date(refdate + count);
     //    count +=  20000;
