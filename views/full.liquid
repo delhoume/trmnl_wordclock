@@ -1,0 +1,212 @@
+<style>
+    @font-face {
+        font-family: "TerminalF4";
+        font-style: normal;
+        font-weight: bold;
+        font-family: TerminalF4;
+        -webkit-font-smoothing: none;
+        src: url("TerminalF4.ttf") format("truetype")
+    }
+
+    .wordclock_text_normal {
+        background: repeat url("gray-6.png");
+        font-size: 40px;
+        letter-spacing: 30px;display:none;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+        color: rgba(0, 0, 0, 0);
+        -webkit-font-smoothing: none;
+        -webkit-background-clip: text;
+        background-clip: text;
+        font-family: "TerminalF4";
+    }
+
+    .wordclock_text_highlighted {
+        font-size: 40px;
+        letter-spacing: 30px;display:none;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+        color: #000;
+        -webkit-font-smoothing: none;
+        font-family: "TerminalF4";
+    }
+</style>
+
+<div class="view view--full">
+            <div class="layout layout--col layout--center-y">
+                <div>
+                    <div class="row">
+                        <p id="u_un_une" style="color:#666;font-size: 40px;letter-spacing: 30px;display:none;">U</p>
+                        <p id="n_un_une_neuf" style="font-size: 40px;letter-spacing: 30px;display:none;">N</p>
+                        <p id="e_une_neuf" style="font-size: 40px;letter-spacing: 30px;display:none;">E</p>
+                        <p id="uf_neuf" style="font-size: 40px;letter-spacing: 30px;display:none;">UF</p>
+                        <p id="deux" style="font-size: 40px;letter-spacing: 30px;display:none;">DEUX</p>
+                        <p id="sept" style="font-size: 40px;letter-spacing: 30px;display:none;">SEPT</p>
+                    </div>
+                    <div class="row">
+                        <p id="cin_cinq" style="font-size: 40px;letter-spacing: 30px;display:none;">CIN</p>
+                        <p id="q_cinq_quatre" style="font-size: 40px;letter-spacing: 30px;display:none;">Q</p>
+                        <p id="uatre_quatre" style="font-size: 40px;letter-spacing: 30px;display:none;">UATRE</p>
+                        <p id="huit" style="font-size: 40px;letter-spacing: 30px;display:none;">HUIT</p>
+                    </div>
+                    <div class="row">
+                        <p id="troi_trois" style="font-size: 40px;letter-spacing: 30px;display:none;">TROI</p>
+                        <p id="s_trois_six" style="font-size: 40px;letter-spacing: 30px;display:none;">S</p>
+                        <p id="ix_six" style="font-size: 40px;letter-spacing: 30px;display:none;">IX</p>
+                        <p id="minuit" style="font-size: 40px;letter-spacing: 30px;display:none;">MINUIT</p>
+                    </div>
+                    <div class="row">
+                        <p id="onze" style="font-size: 40px;letter-spacing: 30px;display:none;">ONZE</p>
+                        <p id="mi_midi" style="font-size: 40px;letter-spacing: 30px;display:none;">MI</p>
+                        <p id="di_midi" style="font-size: 40px;letter-spacing: 30px;display:none;">DI
+                        <p id="x_dix" style="font-size: 40px;letter-spacing: 30px;display:none;">X</p>
+                        <p id="" style="font-size: 40px;letter-spacing: 30px;display:none;">STAR</p>
+
+                    </div>
+                    <div class="row">
+                        <p id="heure" style="font-size: 40px;letter-spacing: 30px;display:none;">HEURE</p>
+                        <p id="s_heures" style="font-size: 40px;letter-spacing: 30px;display:none;">S</p>
+                        <p style="font-size: 40px;letter-spacing: 30px;display:none;">K</p>
+                        <p id="moins" style="color:#666;font-size: 40px;letter-spacing: 30px;display:none;">MOINS</p>
+                        <p style="font-size: 40px;letter-spacing: 30px;display:none;">Y</p>
+                    </div>
+                    <div class="row">
+                        <p id="l_le" style="font-size: 40px;letter-spacing: 30px;display:none;">L</p>
+                        <p id="e_le_et" style="font-size: 40px;letter-spacing: 30px;display:none;">E</p>
+                        <p id="t_et" style="font-size: 40px;letter-spacing: 30px;display:none;">T</p>
+                        <p id="vingt_vingt_vingtcinq" style="font-size: 40px;letter-spacing: 30px;display:none;">VINGT</p>
+                        <p id="ddash" style="font-size: 40px;letter-spacing: 30px;display:none;">-</p>
+                        <p id="minute_cinq_vingtcinq" style="font-size: 40px;letter-spacing: 30px;display:none;">CINQ</p>
+                    </div>
+                    <div class="row">
+                        <p id="minute_dix" style="font-size: 40px;letter-spacing: 30px;display:none;">DIX</p>
+                        <p id="quart" style="font-size: 40px;letter-spacing: 30px;display:none;">QUART</p>
+                        <p id="demie" style="font-size: 40px;letter-spacing: 30px;display:none;">DEMIE</p>
+                    </div>
+                </div>
+</div>             
+            <div class="title_bar">
+                <img class="image" src="https://usetrmnl.com/images/plugins/trmnl--render.svg" />
+                <span class="title">Word Clock</span>
+                <span class="instance">Arcueil</span>
+            </div>
+        </div>
+
+
+<script type="text/javascript">
+
+    /*
+      1 bit worldclock by delhoume@gmail.com
+      this code is free
+      */
+
+    const highlight = (name) => {
+        var element = document.getElementById(name);
+        if (element) element.style = "font-size: 30px;display:none;letter-spacing: 30px;display:block"
+    ;
+        else console.log("no such element", name);
+    }
+
+
+    var count = 0;
+    const showTime = () => {
+        var highlighted = document.getElementsByClassName("wordclock_text_highlighted");
+        var ids = [];
+        if (highlighted.length > 0) {
+            for (var h = 0; h < highlighted.length; ++h) {
+                ids.push(highlighted[h].id)
+            }
+        }
+        ids.forEach((id) => document.getElementById(id).style= "font-size: 30px;display:none;letter-spacing: 30px;display:block");
+        var now = new Date(); // normal mode
+        var utc_offset = now.getTimezoneOffset() * 60 * 1000; // in minutes
+        var trmnl_user_offset = 0;//-28800 * 1000;  // user plugin parameter ? (in seconds)
+        //now = new Date(now.getTime() + utc_offset + trmnl_user_offset);
+        // uncomment next 3 lines for time warp !
+        // const refdate = new Date(2025, 1, 18).getTime();
+        // now = new Date(refdate + count);
+        // count += 100000;
+        
+
+        var hour = now.getHours();
+        var minutes = now.getMinutes();
+        var displayed_hour = hour;
+
+        var num_five = Math.floor(minutes / 5);
+        // console.log(minutes, "-=>", num_five);
+
+        if (minutes > 30) {
+            displayed_hour = hour + 1;
+        }
+
+        switch (displayed_hour) {
+            case 0: { highlight("minuit"); } break
+            case 1: case 13: {
+                highlight("heure"); highlight("u_un_une");
+                highlight("n_un_une_neuf"); highlight("e_une_neuf");
+                highlight("heure");
+                break;
+            }
+            case 2: case 14: { highlight("deux"); highlight("heure"); highlight("s_heures"); break; }
+            case 3: case 15: { highlight("troi_trois"); highlight("s_trois_six"); highlight("heure"); highlight("s_heures"); break; }
+            case 4: case 16: { highlight("q_cinq_quatre"); highlight("uatre_quatre"); highlight("heure"); highlight("s_heures"); break };
+            case 5: case 17: { highlight("cin_cinq"); highlight("q_cinq_quatre"); highlight("heure"); highlight("s_heures"); break; };
+            case 6: case 18: { highlight("s_trois_six"); highlight("ix_six"); highlight("heure"); highlight("s_heures"); break; };
+            case 7: case 19: { highlight("sept"); highlight("heure"); highlight("s_heures"); break; }
+            case 8: case 20: { highlight("huit"); highlight("heure"); highlight("s_heures"); break; }
+            case 9: case 21: { highlight("n_un_une_neuf"); highlight("e_une_neuf"); highlight("uf_neuf"); highlight("heure"); highlight("s_heures"); break; };
+            case 10: case 22: {
+                highlight("di_midi"); highlight("x_dix"); highlight("heure"); highlight("s_heures");
+                highlight("heure"); highlight("s_heures");
+            } break;
+            case 11: case 23: { highlight("onze"); highlight("heure"); highlight("s_heures"); break };
+            case 12: { highlight("mi_midi"); highlight("di_midi"); break }
+        }
+        switch (num_five) {
+            case 1:
+                highlight("minute_cinq_vingtcinq"); break;
+            case 2:
+                highlight("minute_dix"); break;
+            case 3:
+                highlight("e_le_et"); highlight("t_et"); highlight("quart"); break;
+            case 4: {
+                highlight("vingt_vingt_vingtcinq");
+            } break;
+            case 5: {
+                highlight("vingt_vingt_vingtcinq"); highlight("ddash"); highlight("minute_cinq_vingtcinq");
+            } break;
+            case 6: {
+                highlight("e_le_et"); highlight("t_et");
+                highlight("demie");
+            } break;
+            case 7: {
+                highlight("moins");
+                highlight("vingt_vingt_vingtcinq"); highlight("ddash"); highlight("minute_cinq_vingtcinq");
+            } break;
+            case 8: {
+                highlight("moins");
+                highlight("vingt_vingt_vingtcinq");
+            } break;
+            case 9: {
+                highlight("moins"); highlight("l_le"); highlight("e_le_et");
+                highlight("quart");
+            } break;
+
+            case 10: {
+                highlight("moins");
+                highlight("minute_dix");
+            } break;
+            case 11: {
+                highlight("moins");
+                highlight("minute_cinq_vingtcinq");
+            } break;
+        }
+        window.requestAnimationFrame(showTime);
+    }
+    showTime()
+
+</script>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://usetrmnl.com/css/latest/plugins.css">
+</head>
+<style>
+    @font-face {
+        font-family: "TerminalF4";
+        font-style: normal;
+        font-weight: bold;
+        src: url("TerminalF4.ttf") format("truetype")
+    }
+
+    .wordclock_text_normal {
+        font-size: 500%;
+        letter-spacing: 20px;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+        color: #000;
+        -webkit-font-smoothing: none;
+        font-family: "TerminalF4";
+    }
+</style>
+
+<body class="environment trmnl">
+    <div class="screen">
+        <div class="view view--full">
+            <div class="layout layout--col">
+                <p id="word_one" class="wordclock_text_normal"></p>
+                <p id="word_two" class="wordclock_text_normal"></p>
+                <p id="word_three" class="wordclock_text_normal"></p>
+            </div>
+            <div class="title_bar">
+                <img class="image" src="https://usetrmnl.com/images/plugins/trmnl--render.svg" />
+                <span class="title">Three Word Clock</span>
+                <span class="instance">Arcueil</span>
+            </div>
+        </div>
+</body>
+
+<script type="text/javascript">
+    // three word clock by delhoume@gmail.com    this code is free
+    const showTime = () => {
+        var now = new Date(); // normal mode
+        // var utc_offset = now.getTimezoneOffset() * 60 * 1000; // in seconds
+        // console.log(utc_offset);
+        // var trmnl_user_offset = 0;
+        // trmnl_user_offset = 0; // -28800 * 1000;  // user plugin parameter ? (in seconds)
+        // now = new Date(now.getTime() + utc_offset + trmnl_user_offset);
+        
+        var hour = now.getHours();
+        var minutes = now.getMinutes();
+        var displayed_hour = minutes > 30 ? hour + 1 : hour;
+        var num_five = Math.floor(minutes / 5);
+        var word_one = "\u00a0";
+        var word_two = "\u00a0";
+        var word_three = "\u00a0";
+
+        var hour_word_map = ["MIDNIGHT", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX",
+            "SEVEN", "EIGHT", "NINE", "TEN", "ELEVEN", "NOON"]
+
+        word_three = hour_word_map[(displayed_hour % 12)];
+
+        const words_map1 = [
+            ["FIVE", "PAST"],["TEN", "PAST"],["QUARTER", "PAST"], ["TWENTY", "PAST"], 
+            ["TWENTY-FIVE", "PAST"],["HALF", "PAST"], ["TWENTY-FIVE", "TO"],
+            ["TWENTY", "TO"],["QUARTER", "TO"], ["TEN", "TO"], ["FIVE", "TO"]
+        ]
+console.log(hour, displayed_hour);
+        if (num_five == 0) {
+            if (hour != 0 && hour != 12) {
+                word_one = word_three;
+                word_three = "O'CLOCK";
+                word_two = "\u00a0";
+            } else {
+              world_two = word_three;
+              word_three = "\u00a0";
+            }
+        } else {
+            word_one = words_map1[num_five - 1][0];
+            word_two = words_map1[num_five - 1][1];
+        }
+        document.getElementById("word_one").innerHTML = word_one;
+        document.getElementById("word_two").innerHTML = word_two;
+        document.getElementById("word_three").innerHTML = word_three;
+        window.requestAnimationFrame(showTime);
+    }
+    showTime()
+</script>
+</html>

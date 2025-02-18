@@ -1,0 +1,19 @@
+    @font-face {
+        font-family: "TerminalF4";
+        font-style: normal;
+        font-weight: bold;
+        font-family: TerminalF4;
+        -webkit-font-smoothing: none;
+        src: url("TerminalF4.ttf") format("truetype")
+    }
+
+    .wordclock_text_normal {
+        font-size: 90px;
+        letter-spacing: 15px;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+        color: #000;
+        -webkit-font-smoothing: none;
+        font-family: "TerminalF4";
+    }
