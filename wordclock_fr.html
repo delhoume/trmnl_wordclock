@@ -130,9 +130,9 @@
         }
         ids.forEach((id) => document.getElementById(id).className = "wordclock_text_normal");
         var now = new Date(); // normal mode
-        var utc_offset = now.getTimezoneOffset() * 60 * 1000; // in minutes
-        var trmnl_user_offset = -28800 * 1000;  // user plugin parameter ? (in seconds)
-        now = new Date(now.getTime() + utc_offset + trmnl_user_offset);
+       // var utc_offset = now.getTimezoneOffset() * 60 * 1000; // in minutes
+        //var trmnl_user_offset = 0; // -28800 * 1000;  // user plugin parameter ? (in seconds)
+       // now = new Date(now.getTime() + utc_offset + trmnl_user_offset);
         // uncomment next 3 lines for time warp !
         // const refdate = new Date(2025, 1, 18).getTime();
         // now = new Date(refdate + count);
@@ -146,12 +146,12 @@
         var num_five = Math.floor(minutes / 5);
         // console.log(minutes, "-=>", num_five);
 
-        if (minutes > 30) {
+        if (minutes > 34) {
             displayed_hour = hour + 1;
         }
 
         switch (displayed_hour) {
-            case 0: { highlight("minuit"); } break
+            case 0: case 24: { highlight("minuit"); } break
             case 1: case 13: {
                 highlight("heure"); highlight("u_un_une");
                 highlight("n_un_une_neuf"); highlight("e_une_neuf");

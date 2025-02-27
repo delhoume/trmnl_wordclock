@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<style>
+    @font-face {
+        font-family: "TerminalF4";
+        font-style: normal;
+        font-weight: bold;
+        font-family: TerminalF4;
+        -webkit-font-smoothing: none;
+        src: url("TerminalF4.ttf") format("truetype")
+    }
+
+    .wordclock_text_normal {
+        background: repeat url("gray-6.png");
+        font-size: 40px;
+        letter-spacing: 30px;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+        color: rgba(0, 0, 0, 0);
+        -webkit-font-smoothing: none;
+        -webkit-background-clip: text;
+        background-clip: text;
+
+        font-family: "TerminalF4";
+    }
+
+    .wordclock_text_highlighted {
+        font-size: 40px;
+        letter-spacing: 30px;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+        color: #000;
+        -webkit-font-smoothing: none;
+        font-family: "TerminalF4";
+    }
+</style>
+
+<head>
+    <link rel="stylesheet" href="https://usetrmnl.com/css/latest/plugins.css">
+</head>
+
+<body class="environment trmnl">
+    <div class="screen">
+        <div class="view view--full">
+            <div class="layout layout--col layout--center-y">
+                <div>
+                    <div class="row">
+                        <p id="una" class="wordclock_text_normal">UNA</p>
+                        <p id="do_dos" class="wordclock_text_normal">DO</p>
+                        <p id="s_dos_seis" class="wordclock_text_normal">S</p>
+                        <p id="ei_seis" class="wordclock_text_normal">EI</p>
+                        <p id="s_seis_siete" class="wordclock_text_normal">S</p>
+                        <p id="iete_siete" class="wordclock_text_normal">IETE</p>
+                    </div>
+                    <div class="row">
+                        <p id="diez" class="wordclock_text_normal">DIEZ</p>
+                        <p id="cuatr_cuatro" class="wordclock_text_normal">CUATR</p>
+                        <p id="o_cuatro_ocho" class="wordclock_text_normal">O</p>
+                        <p id="cho_ocho" class="wordclock_text_normal">CHO</p>
+
+                    </div>
+                    <div class="row">
+                        <p id="cinc_cinco" class="wordclock_text_normal">CINC</p>
+                        <p id="o_cinco_once" class="wordclock_text_normal">O</p>
+                        <p id="nce_once" class="wordclock_text_normal">NCE</p>
+                        <p id="nueve" class="wordclock_text_normal">NUEVE</p>
+                    </div>
+                    <div class="row">
+                        <p id="doce" class="wordclock_text_normal">DOCE</p>
+                        <p id="tres" class="wordclock_text_normal">TRES</p>
+                        <p id="menos" class="wordclock_text_normal">MENOS</p>
+                    </div>
+                    <div class="row">
+                        <p id="y" class="wordclock_text_normal">Y</p>            
+                        <p class="wordclock_text_normal">S</p>
+                        <p id="veinti" class="wordclock_text_normal">VEINTI</p>
+                        <p id="cinco" class="wordclock_text_normal">CINCO</p>
+                    </div>
+                    <div class="row">
+                        <p class="wordclock_text_normal">TA</p>
+                        <p id="cuarto" class="wordclock_text_normal">CUARTO</p>
+                        <p id="media" class="wordclock_text_normal">MEDIA</p>
+                    </div>
+                    <div class="row">
+                        <p id="veinte" class="wordclock_text_normal">VEINTE</p>
+                        <p class="wordclock_text_normal">RKY</p>
+                        <p id="diez_minute" class="wordclock_text_normal">DIEZ</p>                    </div>
+                </div>
+            </div>
+            <div class="title_bar">
+                <img class="image" src="https://usetrmnl.com/images/plugins/trmnl--render.svg" />
+                <span class="title">Word Clock</span>
+                <span class="instance">Arcueil</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+
+    /*
+      1 bit worldclock by delhoume@gmail.com
+      */
+
+    const highlight = (name) => {
+        var element = document.getElementById(name);
+        if (element) element.className = "wordclock_text_highlighted";
+        else console.log("no such element", name);
+    }
+
+
+    var count = 0;
+    const showTime = () => {
+        var highlighted = document.getElementsByClassName("wordclock_text_highlighted");
+        var ids = [];
+        if (highlighted.length > 0) {
+            for (var h = 0; h < highlighted.length; ++h) {
+                ids.push(highlighted[h].id)
+            }
+        }
+        ids.forEach((id) => document.getElementById(id).className = "wordclock_text_normal");
+        var now = new Date(); // normal mode
+        // var utc_offset = now.getTimezoneOffset() * 60 * 1000; // in minutes
+        // var trmnl_user_offset = -28800 * 1000;  // user plugin parameter ? (in seconds)
+        // now = new Date(now.getTime() + utc_offset + trmnl_user_offset);
+        // uncomment next 3 lines for time warp !
+        //    const refdate = new Date(2025, 1, 18).getTime();
+        //    now = new Date(refdate + count);
+        //    count +=  20000;
+        var hour = now.getHours();
+        var minutes = now.getMinutes();
+        var displayed_hour = hour;
+
+        var num_five = Math.floor(minutes / 5);
+        // console.log(minutes, "-=>", num_five);
+
+        if (minutes > 34) {
+            displayed_hour = hour + 1;
+        }
+
+        switch (displayed_hour % 24) {
+            case 0: case 12: { highlight("doce"); } break
+            case 1: case 13: { highlight("una");break; }
+            case 2: case 14: { highlight("do_dos"); highlight("s_dos_seis"); break; }
+            case 3: case 15: { highlight("tres"); break; }
+            case 4: case 16: { highlight("cuatr_cuatro");  highlight("o_cuatro_ocho"); break };
+            case 5: case 17: { highlight("cinc_cinco");highlight("o_cinco_once"); break; };
+            case 6: case 18: { highlight("s_dos_seis");  highlight("ei_seis"); highlight("s_seis_siete");  break };
+            case 7: case 19: { highlight("s_seis_siete"); highlight("iete_siete"); break };
+            case 8: case 20: { highlight("o_cuatro_ocho"); highlight("cho_ocho"); break };
+            case 9: case 21: { highlight("nueve"); break };
+            case 10: case 22: {  highlight("diez"); break };
+            case 11: case 23: { highlight("o_cinco_once");  highlight("nce_once");break }
+
+        }
+
+        switch (num_five) {
+  
+            case 1:
+                highlight("y");
+                highlight("cinco"); break;
+            case 2:
+                highlight("y"); 
+                highlight("diez_minute"); break;
+            case 3:
+                highlight("y");
+                highlight("cuarto"); break;
+            case 4: {
+                highlight("y");
+                highlight("veinte");
+            } break;
+            case 5: {
+                highlight("y");
+                highlight("veinti"); highlight("cinco");
+            } break;
+            case 6: {
+                highlight("y");
+                highlight("media");
+            } break;
+            case 7: {
+                highlight("menos"); 
+                highlight("veinti"); highlight("cinco");
+            } break;
+            case 8: {
+                highlight("menos");
+                highlight("veinte");
+            } break;
+            case 9: {
+                highlight("menos");
+                highlight("cuarto");
+            } break;
+            case 10: {
+                highlight("menos"); 
+                highlight("diez_minute");
+            } break;
+            case 11: {
+                highlight("menos"); 
+              highlight("cinco");
+            } break;
+        }
+        window.requestAnimationFrame(showTime);
+    }
+    showTime()
+
+</script>
+
+</html>

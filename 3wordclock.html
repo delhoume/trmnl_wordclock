@@ -72,7 +72,7 @@
         var word_one = "_";
         var word_two = "_";
         var word_three =  "_";
-        switch (displayed_hour) {
+        switch (displayed_hour % 24) {
             case 0: word_three = "MIDNIGHT"; break
             case 1: case 13: word_three = "ONE"; break
             case 2: case 14: word_three = "TWO"; break
