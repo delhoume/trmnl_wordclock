@@ -1,0 +1,6 @@
+magick -size 800x480! -kerning 30 -gravity center -font terminalf4.ttf 'label:HALF\nPAST\nMIDNIGHT'  midnight.png
+
+magick -size 800x480! -kerning 30 -gravity center -font terminalf4.ttf \
+'label:UNEUFDEUXSEPT\nCINQUATREHUIT\nTROISIXMINUIT\nONZEMIDIXSTAR\nHEURESKMOINSY\nLETVINGT-CINQ\
+
+magick -size 750x430! -fill #bbbbbb  -kerning 30 -gravity center -font terminalf4.ttf 'label:UNEUFDEUXSEPT\nCINQUATREHUIT\nTROISIXMINUIT\nONZEMIDIXSTAR\nHEURESKMOINSY\nLETVINGT-CINQ\nDIXQUARTDEMIE' -ordered-dither o3x3 -colors 2 -colorspace gray midnight.png
