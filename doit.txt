@@ -4,3 +4,33 @@ magick -size 800x480! -kerning 30 -gravity center -font terminalf4.ttf \
 'label:UNEUFDEUXSEPT\nCINQUATREHUIT\nTROISIXMINUIT\nONZEMIDIXSTAR\nHEURESKMOINSY\nLETVINGT-CINQ\
 
 magick -size 750x430! -fill #bbbbbb  -kerning 30 -gravity center -font terminalf4.ttf 'label:UNEUFDEUXSEPT\nCINQUATREHUIT\nTROISIXMINUIT\nONZEMIDIXSTAR\nHEURESKMOINSY\nLETVINGT-CINQ\nDIXQUARTDEMIE' -ordered-dither o3x3 -colors 2 -colorspace gray midnight.png
+
+
+//en 
+magick -gravity center -background white -fill black -pointsize 200 -font terminalf4.ttf label:@matrix.en.txt -annotate 0x0+160+750 "'" -resize 800x480\! -dither Floyd-Steinberg -remap bw_palette.png -monochrome   foreground_en.png
+magick -gravity center -background white -fill #ddd -pointsize 200 -font terminalf4.ttf label:@matrix.en.txt -annotate 0x0+160+750 "'" -resize 800x480\! -dither Floyd-Steinberg -remap bw_palette.png -monochrome   background_en.png
+
+//fr
+magick -gravity center -background white -fill black -pointsize 120 -font terminalf4.ttf label:@matrix.fr.txt -resize 800x480! -dither Floyd-Steinberg -remap bw_palette.png -monochrome  foreground_fr.png
+magick -gravity center -background white -fill  -pointsize 120 -font terminalf4.ttf label:@matrix.fr.txt -resize 800x480! -dither Floyd-Steinberg -remap bw_palette.png -monochrome  foreground_fr.png
+
+//de
+magick -gravity center -background white -fill black -pointsize 120 -font terminalf4.ttf label:@matrix.de.txt -resize 800x480! -dither Floyd-Steinberg -remap bw_palette.png -monochrome  foreground_de.png
+magick -gravity center -background white -fill #ddd -pointsize 120 -font terminalf4.ttf label:@matrix.de.txt -resize 800x480! -dither Floyd-Steinberg -remap bw_palette.png -monochrome  background_de.png
+
+
+//es
+magick -gravity center -background white -fill black -pointsize 120 -font terminalf4.ttf label:@matrix.es.txt -resize 800x480! -dither Floyd-Steinberg -remap bw_palette.png -monochrome  foreground_es.png
+magick -gravity center -background white -fill #ddd -pointsize 120 -font terminalf4.ttf label:@matrix.es.txt -resize 800x480! -dither Floyd-Steinberg -remap bw_palette.png -monochrome  background_es.png
+
+
+//nl
+magick -gravity center -background white -fill black -pointsize 120 -font terminalf4.ttf label:@matrix.nl.txt -resize 800x480! -dither Floyd-Steinberg -remap bw_palette.png -monochrome  foreground_nl.png
+magick -gravity center -background white -fill #ddd -pointsize 120 -font terminalf4.ttf label:@matrix.nl.txt -resize 800x480! -dither Floyd-Steinberg -remap bw_palette.png -monochrome background_nl.png
+
+
+//it
+magick -gravity center -background white -fill black -pointsize 120 -font terminalf4.ttf label:@matrix.it.txt -resize 800x480! -dither Floyd-Steinberg -remap bw_palette.png -monochrome  foreground_it.png
+magick -gravity center -background white -fill #ddd -pointsize 120 -font terminalf4.ttf label:@matrix.it.txt -resize 800x480! -dither Floyd-Steinberg -remap bw_palette.png -monochrome  background_it.png
+
+// accent sur entre  l et e

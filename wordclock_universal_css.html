@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<style>
+    body {
+        width: 800px;
+        height: 480px;
+    }
+
+    .matrix {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(13, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+        background-color: red;
+    }
+</style>
+
+<body>
+    <div id="matrix" class="matrix"></div>
+
+</body>
+        <script type="text/javascript">
+            const configs = {
+                en: {
+                    matrix_width: 13,
+                    matrix_height: 8,
+                    words: [
+                        { w: "twenty", p: 0 }, { w: "twenty-five", p: 0 }, { w: "five_m", p: 7 }, { w: "cl", p: 11 },
+                        { w: "a", p: 13 }, { w: "s", p: 14 }, { w: "quarter", p: 15 }, { w: "half", p: 22 },
+                        { w: "ten_m", p: 26 }, { w: "t", p: 29 }, { w: "past", p: 30 }, { w: "to", p: 33 }, { w: "a", p: 35 }, { w: "ten_h", p: 36, hours: [10, 22] },
+                        { w: "two", p: 39, hours: [2, 14] }, { w: "one", p: 41, hours: [1, 13] }, { w: "eight", p: 43, hours: [8, 20] }, { w: "three", p: 47, hours: [3, 15] },
+                        { w: "midnight", p: 52, hours: [0, 24] }, { w: "x", p: 60 }, { w: "noon", p: 67, hours: [12] },
+                        { w: "four", p: 65, hours: [4, 16] }, { w: "five_h", p: 69, hours: [5, 17] }, { w: "eleven", p: 72, hours: [11, 23] },
+                        { w: "twelve", p: 78 }, { w: "six", p: 84, hours: [6, 18] }, { w: "nine", p: 87, hours: [9, 21] },
+                        { w: "seven", p: 91, hours: [7, 21] }, { w: "rk", p: 96 }, { w: "oclock", p: 98 }
+                    ],
+                    hour_words: [["midnight"], ["one", "oclock"], ["two", "oclock"], ["three", "oclock"], ["four", "oclock"], ["five_h", "oclock"]
+                        , ["six", "oclock"], ["seven", "oclock"], ["eight", "oclock"], ["nine", "oclock"], ["ten_h", "oclock"], ["eleven", "oclock"],
+                    ["noon"], ["one", "oclock"], ["two", "oclock"], ["three", "oclock"], ["four", "oclock"], ["five_h", "oclock"]
+                        , ["six", "oclock"], ["seven", "oclock"], ["eight", "oclock"], ["nine", "oclock"], ["ten_h", "oclock"], ["eleven", "oclock"]],
+                    fivemin_words: [[], ["five_m", "past"], ["ten_m", "past"], ["a", "quarter", "past"], ["twenty", "past"],
+                    ["twenty-five", "past"], ["half", " past"], ["twenty-five", "to"], ["twenty", "to"], ["a", "quarter", "to"],
+                    ["ten_m", "to"], ["five_m", "to"]],
+                    no_full_hour_when_fivemins: true,
+                    half_hour_switch: 34
+                },
+                fr: {
+                    matrix_width: 13,
+                    matrix_height: 7,
+                    words: [
+                        { w: "une", p: 0 }, { w: "neuf", p: 1 }, { w: "deux", p: 5 }, { w: "sept", p: 9 },
+                        { w: "cinq_h", p: 13 }, { w: "quatre", p: 16 }, { w: "huit", p: 22 },
+                        { w: "trois", p: 26 }, { w: "six", p: 30, }, { w: "minuit", p: 33 },
+                        { w: "onze", p: 39 }, { w: "midi", p: 43 }, { w: "dix_h", p: 45 },
+                        { w: "heure", p: 52 }, { w: "heures", p: 52 }, { w: "moins", p: 59 },
+                        { w: "le", p: 65 }, { w: "et", p: 66 }, { w: "vingt", p: 68 }, { w: "vingt-cinq", p: 68 }, { w: "cinq_m", p: 74 },
+                        { w: "dix_m", p: 78 }, { w: "quart", p: 81 }, { w: "demie", p: 87 }],
+                    hour_words: [["minuit"], ["une", "heure"], ["deux", "heures"], ["trois", "heures"], ["quatre", "heures"], ["cing_h", "heures"],
+                    ["six", "heures"], ["sept", "heures"], ["huit", "heures"], ["neuf", "heures"], ["dix_h", "heures"], ["onze", "heures"],
+                    ["midi"], ["une", "heure"], ["deux", "heures"], ["trois", "heures"], ["quatre", "heures"], ["cing_h", "heures"],
+                    ["six", "heures"], ["sept", "heures"], ["huit", "heures"], ["neuf", "heures"], ["dix_h", "heures"], ["onze", "heures"]],
+                    fivemin_words: [[], ["cinq_m"], ["dix_m"], ["et", "quart"], ["vingt"], ["vingt-cinq"], ["et", "demie"], ["moins", "vingt-cing"],
+                    ["moins", "vingt"], ["moins", "le", "quart"], ["moins", "dix_m"], ["moins", "cinq_m"]],
+                    no_full_hour_when_fivemins: false,
+                    half_hour_switch: 34
+                },
+                "de": {
+                    matrix_width: 13,
+                    matrix_height: 7,
+                    words: [
+                        { w: "zwanzig", p: 0 }, { w: "fünf_m", p: 7 }, { w: "cl", p: 11 },
+                        { w: "st", p: 13 }, { w: "viertel", p: 15 }, { w: "zehn_m", p: 22 },
+                        { w: "vor", p: 26 }, { w: "a", p: 29, }, { w: "nach", p: 30 }, { w: "r", p: 34 }, { w: "halb", p: 35 },
+                        { w: "zwei", p: 39 }, { w: "eins", p: 41 }, { w: "elf", p: 46 }, { w: "drei", p: 49 },
+                        { w: "vier", p: 52 }, { w: "funf_h", p: 56 }, { w: "sechs", p: 61 },
+                        { w: "sieben", p: 65 }, { w: "zehn_h", p: 71 }, { w: "neun", p: 74 },
+                        { w: "zwölf", p: 78 }, { w: "acht", p: 82 }, { w: "k", p: 87 }, { w: "uhr", p: 88 }
+                    ],
+                    hour_words: [["zwölf"], ["ein", "uhr"], ["zwei", "uhr"], ["drei", "uhr"], ["vier", "uhr"], ["funf_h", "uhr"],
+                    ["sechs", "uhr"], ["sieben", "uhr"], ["acht", "uhr"], ["neun", "uhr"], ["zehn_h", "uhr"], ["elf", "uhr"],
+                    ["zwólf"], ["ein", "uhr"], ["zwei", "uhr"], ["drei", "uhr"], ["vier", "uhr"], ["fünf_h", "uhr"],
+                    ["sechs", "uhr"], ["sieben", "uhr"], ["acht", "uhr"], ["neun", "uhr"], ["zehn_h", "uhr"], ["elf", "uhr"]],
+                    fivemin_words: [[], ["nach", "fünf_m"], ["nach", "zehn_m"], ["nach", "viertel"], ["zwanzig", "nach"],
+                    ["vor", "halb", "fünf_m"], ["halb"], ["fünf_m", "nach", "halb"],
+                    ["zwanzig", "vor"], ["viertel", "vor"], ["zehn_m", "vor"], ["fünf_m", "vor"]],
+                    no_full_hour_when_fivemins: true,
+                    half_hour_switch: 29
+                },
+                es: {
+                    matrix_width: 13,
+                    matrix_height: 7,
+                    words: [
+                        { w: "una", p: 0 }, { w: "dos", p: 3 }, { w: "seis", p: 5 }, { w: "siete", p: 8 },
+                        { w: "diez_h", p: 13 }, { w: "cuatro", p: 17 }, { w: "ocho", p: 22 },
+                        { w: "cinco_h", p: 26 }, { w: "once", p: 30 }, { w: "nueve", p: 34 },
+                        { w: "doce", p: 39 }, { w: "tres", p: 43 }, { w: "menos", p: 47 },
+                        { w: "y", p: 52 }, { w: "s", p: 53 }, { w: "veinti", p: 54 }, { w: "cinco_m", p: 60 },
+                        { w: "ta", p: 65 }, { w: "cuarto", p: 67 }, { w: "media", p: 73 },
+                        { w: "veinte", p: 78 }, { w: "rky", p: 84 }, { w: "diez_m", p: 87 },
+                    ],
+                    hour_words: [
+                        ["doce"], ["una"], ["dos"], ["tres"], ["cuatro"], ["cinco_h"], ["seis"], ["siete"], ["ocho"], ["nueve"],
+                        ["diez_h"], ["once"], ["doce"], ["una"], ["dos"], ["tres"], ["cuatro"], ["cinco_h"], ["seis"], ["siete"], ["ocho"], ["nueve"],
+                        ["diez_h"], ["once"], ["doce"]
+                    ],
+                    fivemin_words: [
+                        [], ["y", "cinco_m"], ["y", "diez_m"], ["y", "cuarto"], ["y", "veinte"], ["y", "veinti", "cinco_m"],
+                        ["y", "media"], ["menos", "veinti", "cinco_m"], ["menos", "veinte"], ["menos", "cuarto"], ["menos", "diez_m"],
+                        ["menos", "cinco_m"]
+                    ],
+                    no_full_hour_when_fivemins: true,
+                    half_hour_switch: 34
+                },
+                it: {
+                    matrix_width: 13,
+                    matrix_height: 7,
+                    words: [
+                        ["undici", 0], ["dici_h", 2], ["s", 6], ["dodici", 7],
+                        ["t", 13], ["sei", 14], ["sette", 17], ["nove", 22],
+                        ["due", 26], ["quattro", 29], ["otto", 37],
+                        ["dieci_h", 39], ["cinque_h", 43], ["luna", 50],
+                        ["tre", 52], ["am", 55], ["e", 57], ["no", 58], ["mezza", 60],
+                        ["un_n", 65], ["venti", 67], ["venticinque", 67], ["cinque_m", 72],
+                        ["quarto", 78], ["rk", 85], ["dieci_m", 87]],
+                    hour_words: [
+                        ["dodici"], ["una"], ["due"], ["tre"], ["quattro"], ["cinque_h"], ["sei"], ["sette"],
+                        ["otto"], ["nove"], ["dieci_h"], ["undici"], ["dodici"], ["una"], ["due"], ["tre"], ["quattro"],
+                        ["cinque_h"], ["sei"], ["sette"], ["otto"], ["nove"], ["dieci_h"], ["undici"], ["dodici"]],
+
+                    fivemin_words: [
+                        [], ["e", "cinque_m"], ["e", "dici_m"], ["e", "quarto"], ["e", "vinti"], ["e", "venticinque"], ["e", "mezza"],
+                        ["meno", "venticinque"], ["meno", "venti"], ["meno", "quarto"], ["meno", "dici_m"], [" meno", "cinque_m"]
+                    ],
+                    no_full_hour_when_fivemins: true,
+                    half_hour_switch: 34
+                }
+            }
+
+            const image_width = 800;
+            const image_height = 480;
+            const matrix = document.getElementById("matrix");
+            const config_language = "es";
+
+            const config = configs[config_language];
+            const matrix_width = config["matrix_width"];
+            const matrix_height = config["matrix_height"];
+            matrix.style.gridTemplateColumns = `repeat(${matrix_width}, 1fr)`;
+            matrix.style.gridTemplateRows = `repeat(${matrix_height}, 1fr)`;
+            for (let i = 0; i < matrix_width * matrix_height; ++i) {
+                const cell = document.createElement("div");
+                matrix.append(cell);
+            }
+            const words = configs[config_language]["words"];
+            const onoff = Array(matrix_width * matrix_height);
+            onoff.fill(0);
+
+            function highlight(word) {
+                for (let i = 0; i < words.length; ++i) {
+                    const name = words[i]["w"];
+                    if (name == word) {
+                        highlightIndex(i);
+                        return;
+                    }
+                }
+            }
+
+            function highlightIndex(index) {
+                const word = words[index];
+                const name = word["w"];
+                const pos = word["p"];
+                const under = name.indexOf('_');
+                const realword = under == -1 ? name : name.substring(0, under);
+                for (let l = 0; l < realword.length; ++l) {
+                    onoff[pos + l] = 1;
+                }
+            }
+
+            function showHighlights() {
+                for (let pos = 0; pos < onoff.length; ++pos) {
+                    const x = pos % matrix_width;
+                    const y = Math.floor(pos / matrix_width);
+                    const tile_width = image_width / matrix_width;
+                    const tile_height = image_height / matrix_height;
+                    const lcell = matrix.children[pos];
+                    lcell.style.backgroundImage = onoff[pos] == 0 ? `url(background_${config_language}.png)` : `url(foreground_${config_language}.png)`;
+                    lcell.style.backgroundPosition = `-${x * tile_width}px -${y * tile_height}px`;
+                    lcell.style.width = `${tile_width}`;
+                    lcell.style.height = `${tile_height}`;
+                }
+            }
+
+            const showTime = () => {
+                var now = new Date(); // normal mode
+                // var utc_offset = now.getTimezoneOffset() * 60 * 1000; // in minutes
+                //     var trmnl_user_offset = -28800 * 1000;  // user plugin parameter ? (in seconds)
+                //     now = new Date(now.getTime() + utc_offset + trmnl_user_offset);
+                var hour = now.getHours();
+                var minutes = now.getMinutes();
+                var displayed_hour = hour;
+
+                var num_five = Math.floor(minutes / 5);
+
+                console.log("real time: ", "hour", hour, "displayed_hour", displayed_hour, "num five", num_five);
+
+                if (minutes > config.half_hour_switch) {
+                    displayed_hour = hour + 1;
+                }
+
+                if (displayed_hour < config.hour_words.length) {
+                    let hour_words = config.hour_words[displayed_hour];
+                    for (let w = 0; w < hour_words.length; ++w) {
+                        highlight(hour_words[w]);
+                        if (num_five > 0 && config.no_full_hour_when_fivemins)
+                            break;
+                    }
+                }
+                if (num_five < config.fivemin_words.length) {
+                    let fiveminwords = config.fivemin_words[num_five];
+                    for (let w = 0; w < fiveminwords.length; ++w) {
+                        highlight(fiveminwords[w]);
+                    }
+                }
+                showHighlights();
+            }
+
+            showTime();
+        </script>
+
+</html>

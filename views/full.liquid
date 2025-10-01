@@ -10,20 +10,20 @@
 
     .wordclock_text_normal {
         background: repeat url("gray-6.png");
-        font-size: 40px;
+        font-size:100px;
         letter-spacing: 30px;display:none;
         image-rendering: pixelated;
         image-rendering: -moz-crisp-edges;
         image-rendering: crisp-edges;
-        color: rgba(0, 0, 0, 0);
-        -webkit-font-smoothing: none;
+        color: #aaaaaa;
+                -webkit-font-smoothing: none;
         -webkit-background-clip: text;
         background-clip: text;
         font-family: "TerminalF4";
     }
 
     .wordclock_text_highlighted {
-        font-size: 40px;
+        font-size: 80px;
         letter-spacing: 30px;display:none;
         image-rendering: pixelated;
         image-rendering: -moz-crisp-edges;
@@ -205,7 +205,11 @@
         }
         window.requestAnimationFrame(showTime);
     }
-    showTime()
+    
+    document.addEventListener("DOMContentLoaded", function(e) { 
+// code goes here 
+showTime();
+});
 
 </script>
 
